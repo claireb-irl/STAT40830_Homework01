@@ -1,0 +1,144 @@
+---
+title: \textcolor{teal}{STAT40830 Homework 1}
+subtitle: "*Student Number 22208839*"
+author: "*Claire Branagan*"
+date: "2024-06-05"
+format: pdf
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| eval: true
+
+# load packages
+# install.packages("kableExtra")
+library(MASS)
+library(kableExtra)
+library(ggplot2)
+
+# load dataset
+data("ChickWeight")
+```
+
+```{r}
+#| label: init_look
+#| echo: false
+#| eval: false
+
+# first look at data
+head(ChickWeight)
+summary(ChickWeight)
+```
+
+## \textcolor{teal}{Dataset}
+
+The dataset used is from an experiment on the effect of diet on early growth of chicks.  There were four groups on chicks on different protein diets.  The body weights of the chicks were measured at birth and every second day thereafter until Day 20. They were also measured on Day 21.  The dataset has 578 rows and 4 columns.  Further background is available at the following link: <https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/ChickWeight>
+
+
+## \textcolor{teal}{Approach}
+
+In order to compare the effect of the 4 different diets on chick weight, I considered the median chick weight for each diet on every day the chicks were weighed.
+
+## \textcolor{teal}{Summary}
+
+The table below shows the median chick weight for each diet at birth (Day 0), approximately halfway through the experiment (Day 10) and on the last day included in the dataset (Day 21).
+
+```{r}
+#| label: summ1
+#| echo: false
+#| eval: true
+
+# include weights at birth, day 10 and day 21 for each diet
+days_to_extract <- c(0, 10, 21)
+data_subset <- ChickWeight[ChickWeight$Time %in% days_to_extract,]
+# median weights by day and diet for chosen days
+summ_for_tbl <- tapply(data_subset$weight, list(data_subset$Time, data_subset$Diet), median)  
+
+# format output
+summ_for_tbl %>%
+  kbl(escape=FALSE
+      , align = "ccccc"
+      , col.names = c("Day", "Diet 1", "Diet 2", "Diet 3", "Diet 4")
+      ) %>%
+  # prevent table from floating to top of page
+  kable_styling(latex_options = "HOLD_position") %>%
+  #select theme
+  kable_classic(full_width = TRUE) %>%
+  add_header_above(c("Median weight (grams) of chicks at Days 0, 10 and 21" = 5), font_size = 12) 
+
+```
+
+\newpage
+
+The table above shows that:
+
+\textcolor{teal}{*}  the median weight at birth for each group of chicks is approximately the same (40.5-41.0 grams).
+
+\textcolor{teal}{*}  the median chick weight at Day 10 is highest for _Diet 4_ and lowest for _Diet 1_ (123.5 and 93 grams respectively).
+
+\textcolor{teal}{*}  the median chick weight at Day 21 is highest for _Diet 3_ and lowest for _Diet 1_ (281 and 166 grams respectively).
+
+
+## \textcolor{teal}{Plot}
+
+The progression of the median chick weight from Day 0 through to Day 21 is plotted below, with each diet shown as a separate line.
+
+```{r fig.dim = c(8, 5)}
+#| label: plot
+#| echo: false
+#| eval: true
+
+# prepare data for plotting 
+# median weight by day and diet 
+df_for_plot <- aggregate(ChickWeight$weight, list(ChickWeight$Time, ChickWeight$Diet), median)
+colnames(df_for_plot) <- c("day", "diet", "weight")
+# custom colours
+custom_cols <- c("darkgreen", "gold","deepskyblue","#CD2626") 
+custom_types <- rep(1, 4)
+# spec plot
+p <- ggplot(df_for_plot
+       , aes(x = day
+          , y = weight
+          , colour = diet
+          )
+      ) +
+#  geom_point(aes(colour = diet, group = diet)) + 
+  geom_line() + 
+  scale_colour_manual(values = custom_cols) +
+  labs(title = "Median chick weight by day since birth and diet"
+       , x = "Days since birth"
+       , y = "Median weight in grams"
+       , caption = "Source: R dataset"
+       , color = "Diet"
+       ) +
+  # axes labelling
+  scale_y_continuous(limits= c(0, 300)
+                     , breaks = seq(0, 300, by = 50)
+                     , labels = seq(0, 300, by = 50)
+                     ) +
+  scale_x_continuous(breaks = c(seq(from=0,to=21,by=1))
+                     , labels= c(seq(from=0,to=21,by=1))) +
+  # layout
+  theme_minimal() +
+  theme(legend.position = "bottom"
+         , legend.background = element_rect(fill = "white", colour = "black") #frame
+         , plot.background = element_rect(colour = "black", fill = NA, linewidth = 0.5) #frame
+         , plot.margin = unit(c(0.25,0.25,0.25,0.25), "cm")
+         , axis.title.x = element_text(margin=margin(t=15)) #add margin to x-axis title
+         , axis.title.y = element_text(margin=margin(r=15)) #add margin to y-axis title
+         , panel.grid.minor.x = element_blank() # remove minor grid lines x axis
+         , panel.grid.minor.y = element_blank() # remove minor grid lines y axis
+         ) 
+
+# output plot 
+p
+```
+The plot above indicates that:
+
+\textcolor{teal}{*}  the median weight at birth for each group of chicks is approximately the same.
+
+\textcolor{teal}{*}  the chicks on _Diet 4_ have the highest median weight up to Day 14, after which chicks on _Diet 3_ have the highest median weight.
+
+\textcolor{teal}{*}  the chicks on _Diet 1_ have the lowest median weight from birth through to Day 21.
