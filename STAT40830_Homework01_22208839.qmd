@@ -1,7 +1,7 @@
 ---
 title: \textcolor{teal}{STAT40830 Homework 1}
-subtitle: "*Student Number 22208839*"
-author: "*Claire Branagan*"
+subtitle: \textcolor{teal}{Version Control with GitHub}
+author: "*Claire Branagan : Student Number 22208839*"
 date: "2024-06-05"
 format: pdf
 editor: visual
@@ -34,8 +34,7 @@ summary(ChickWeight)
 
 ## \textcolor{teal}{Dataset}
 
-The dataset used is from an experiment on the effect of diet on early growth of chicks.  There were four groups on chicks on different protein diets.  The body weights of the chicks were measured at birth and every second day thereafter until Day 20. They were also measured on Day 21.  The dataset has 578 rows and 4 columns.  Further background is available at the following link: <https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/ChickWeight>
-
+The dataset used is from an experiment on the effect of diet on early growth of chicks. There were four groups on chicks on different protein diets. The body weights of the chicks were measured at birth and every second day thereafter until Day 20. They were also measured on Day 21. The dataset has 578 rows and 4 columns. Further background is available at the following link: <https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/ChickWeight>
 
 ## \textcolor{teal}{Approach}
 
@@ -74,12 +73,11 @@ summ_for_tbl %>%
 
 The table above shows that:
 
-\textcolor{teal}{*}  the median weight at birth for each group of chicks is approximately the same (40.5-41.0 grams).
+\textcolor{teal}{*} the median weight at birth for each group of chicks is approximately the same (40.5-41.0 grams).
 
-\textcolor{teal}{*}  the median chick weight at Day 10 is highest for _Diet 4_ and lowest for _Diet 1_ (123.5 and 93 grams respectively).
+\textcolor{teal}{*} the median chick weight at Day 10 is highest for *Diet 4* and lowest for *Diet 1* (123.5 and 93 grams respectively).
 
-\textcolor{teal}{*}  the median chick weight at Day 21 is highest for _Diet 3_ and lowest for _Diet 1_ (281 and 166 grams respectively).
-
+\textcolor{teal}{*} the median chick weight at Day 21 is highest for *Diet 3* and lowest for *Diet 1* (281 and 166 grams respectively).
 
 ## \textcolor{teal}{Plot}
 
@@ -135,10 +133,11 @@ p <- ggplot(df_for_plot
 # output plot 
 p
 ```
+
 The plot above indicates that:
 
-\textcolor{teal}{*}  the median weight at birth for each group of chicks is approximately the same.
+\textcolor{teal}{*} the median weight at birth for each group of chicks is approximately the same.
 
-\textcolor{teal}{*}  the chicks on _Diet 4_ have the highest median weight up to Day 14, after which chicks on _Diet 3_ have the highest median weight.
+\textcolor{teal}{*} the chicks on *Diet 4* have the highest median weight up to Day 14, after which chicks on *Diet 3* have the highest median weight.
 
-\textcolor{teal}{*}  the chicks on _Diet 1_ have the lowest median weight from birth through to Day 21.
+\textcolor{teal}{*} the chicks on *Diet 1* have the lowest median weight from birth through to Day 21.
